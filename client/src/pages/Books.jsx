@@ -32,17 +32,17 @@ const Books = () => {
       <div className='books'>
         {books.map((book) => (
           <div className='book' key={book.id}>
-            {book.cover && <img src={book.cover} alt='' />}
+            {book.cover && <img src="https://media.istockphoto.com/id/1297963288/photo/e-book-reader.jpg?b=1&s=170667a&w=0&k=20&c=ObwCii_nyj4wIizFodAzDo0fn9B-wU3wMA0d1o2mmec=" alt='' />}
             <h2>{book.title}</h2>
             <p>{book.desc}</p>
             <span>{book.price}</span>
             <button className='delete' onClick={()=>handleDelete(book.id)} >DELETE</button>
-            <button className='update'><Link to={`/update/${book.id}`}>UPDATE</Link></button>
+            <button className='update'><Link to={`/update/${book.id}`} style={{textDecoration: 'none'}}>UPDATE</Link></button>
           </div>
         ))}
       </div>
       <button>
-        <Link to={'/add'}>Add new Book</Link>
+        <Link to={'/add'} style={{textDecoration: 'none', color:"green"}}>Add new Book</Link>
       </button>
     </div>
   );

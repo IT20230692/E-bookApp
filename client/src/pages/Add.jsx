@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+
 
 const Add = () => {
   const [book, setBook] = useState({
@@ -49,7 +49,7 @@ console.log(err);
         name='price'
       />
       <input
-        type='text'
+        type='file'
         placeholder='Cover Photo'
         onChange={handleChange}
         name='cover'
