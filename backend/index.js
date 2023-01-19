@@ -1,9 +1,11 @@
 import express from 'express';
 import mysql from 'mysql';
+import cors from 'cors';
 
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 //auth problem
 //ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'chandima1999';
@@ -14,6 +16,7 @@ const db = mysql.createConnection({
   database: 'ebookapp',
 });
 
+//read books
 app.get('/', (req, res) => {
   res.json('hello this is backend');
 });
@@ -26,17 +29,48 @@ app.get('/books', (req, res) => {
   });
 });
 
+//add new books
 app.post('/books', (req, res) => {
-  const q = 'INSERT INTO BOOKS (`title`, `desc`, `cover`) VALUES (?)';
+  const q = 'INSERT INTO BOOKS (`title`, `desc`, `price`, `cover`) VALUES (?)';
   const values = [
     req.body.title,
     req.body.desc,
+    req.body.price,
     req.body.cover,
   ];
 
   db.query(q, [values], (err, data) => {
     if (err) return res.json(err);
-    return res.json("Bokks has been created successfully...");
+    return res.json('Bokks has been created successfully...');
+  });
+});
+
+//delete book posts
+app.delete('/books/:id', (req, res) => {
+  const bookId = req.params.id;
+  const q = 'DELETE FROM books WHERE id = ?';
+
+  db.query(q, [bookId], (err, data) => {
+    if (err) return res.json(err);
+    return res.json('Bokks has been deleted successfully...');
+  });
+});
+
+//update book post
+app.put('/books/:id', (req, res) => {
+  const bookId = req.params.id;
+  const q = 'UPDATE books SET `title` = ?, `desc` = ?, `price` = ?, `cover` = ? WHERE id = ?';
+
+  const values = [
+    req.body.title,
+    req.body.desc,
+    req.body.price,
+    req.body.cover,
+  ]
+
+  db.query(q, [...values, bookId], (err, data) => {
+    if (err) return res.json(err);
+    return res.json('Bokks has been updates successfully...');
   });
 });
 
